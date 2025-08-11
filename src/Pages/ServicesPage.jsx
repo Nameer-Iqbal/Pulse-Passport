@@ -44,7 +44,7 @@ export default function Services() {
             {services.slice(0, 3).map((service, index) => (
               <div 
                 key={index}
-                className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 group hover:transform hover:scale-105"
+                className=" rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 group hover:transform hover:scale-105"
               >
                 <div className="flex items-start space-x-4">
                   <div className="bg-teal-50 p-3 rounded-xl group-hover:bg-teal-100 transition-colors duration-300">
