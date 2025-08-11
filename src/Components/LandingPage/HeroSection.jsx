@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -19,12 +20,16 @@ const HeroSection = () => {
              Get personalized, secure, and real-time healthcare from anywhere. Powered by advanced AI, trusted by doctors, and designed for you
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/signup">
               <button className="bg-[#325E6D] text-white px-10 py-2 rounded-full text-lg font-semibold hover:bg-teal-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
                 Sign Up
               </button>
+              </Link>
+               <Link to="/login">
               <button className="border border-[#325E6D] text-[#325E6D] px-10 py-2 rounded-full text-lg font-semibold hover:bg-gray-50 transition-colors">
                 Login
               </button>
+              </Link>
             </div>
           </div>
 

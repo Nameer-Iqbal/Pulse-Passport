@@ -1,34 +1,29 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { User, Mail, Lock, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function SignupPage() {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    age: '',
-    gender: 'Gender'
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const [showModal, setShowModal] = useState(false);
+  const [formDataToSubmit, setFormDataToSubmit] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleCreateAccount = () => {
-    // Instead of immediately creating the account, open the modal
+  const onSubmit = (data) => {
+    console.log("Form Data:", data);
+    // Store form data and show role selection modal
+    setFormDataToSubmit(data);
     setShowModal(true);
   };
 
   const handleRoleSelect = (role) => {
+    const finalData = { ...formDataToSubmit, role };
     console.log(`User is signing up as: ${role}`);
-    console.log('Creating account with:', { ...formData, role });
+    console.log('Creating account with:', finalData);
     setShowModal(false);
     // Continue with account creation logic here
   };
@@ -50,74 +45,97 @@ export default function SignupPage() {
           <div className="space-y-4">
             {/* Username */}
             <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <User className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                name="username"
                 placeholder="Username"
-                value={formData.username}
-                onChange={handleInputChange}
-                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
+                {...register("username", { 
+                  required: "Username is required",
+                  minLength: { value: 3, message: "Username must be at least 3 characters" }
+                })}
+                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                  errors.username ? 'border-red-500' : 'border-gray-300'
+                }`}
               />
+              {errors.username && <p className="text-red-500 text-sm mt-1 ml-4">{errors.username.message}</p>}
             </div>
 
             {/* Email */}
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Mail className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
               <input
                 type="email"
-                name="email"
                 placeholder="Email Address"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: { 
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 
+                    message: "Invalid email address" 
+                  },
+                })}
+                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                  errors.email ? 'border-red-500' : 'border-gray-300'
+                }`}
               />
+              {errors.email && <p className="text-red-500 text-sm mt-1 ml-4">{errors.email.message}</p>}
             </div>
 
             {/* Password */}
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Lock className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
               <input
                 type="password"
-                name="password"
                 placeholder="Password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: { value: 6, message: "Password must be at least 6 characters" }
+                })}
+                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                  errors.password ? 'border-red-500' : 'border-gray-300'
+                }`}
               />
+              {errors.password && <p className="text-red-500 text-sm mt-1 ml-4">{errors.password.message}</p>}
             </div>
 
             {/* Age & Gender */}
             <div className="flex space-x-4">
-              <input
-                type="number"
-                name="age"
-                placeholder="Age"
-                value={formData.age}
-                onChange={handleInputChange}
-                className="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
-              />
+              <div className="flex-1">
+                <input
+                  type="number"
+                  placeholder="Age"
+                  {...register("age", {
+                    required: "Age is required",
+                    min: { value: 13, message: "Must be at least 13 years old" },
+                    max: { value: 120, message: "Please enter a valid age" }
+                  })}
+                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                    errors.age ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age.message}</p>}
+              </div>
               
               <div className="relative flex-1">
                 <select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-[#BBC4C7] border border-[#BBC4C7] rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent appearance-none cursor-pointer"
+                  {...register("gender", { required: "Please select gender" })}
+                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent appearance-none cursor-pointer ${
+                    errors.gender ? 'border-red-500' : 'border-[#BBC4C7]'
+                  }`}
                 >
-                  <option value="Gender" disabled>Gender</option>
+                  <option value="">Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                   <option value="Prefer not to say">Prefer not to say</option>
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-4  w-5 h-5 pointer-events-none" />
+                {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>}
               </div>
             </div>
 
             {/* Create Account Button */}
             <button
-              onClick={handleCreateAccount}
+              onClick={handleSubmit(onSubmit)}
               className="w-full bg-[#04838F] text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors mt-6"
             >
               Create Account
@@ -155,34 +173,35 @@ export default function SignupPage() {
       </main>
 
       {/* Role Selection Modal */}
-   {showModal && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-    <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
-      <h3 className="text-full font-bold text-[#04838F] mb-10">Register Now</h3>
-      <h4 className="text-lg font-semibold text-gray-800 mb-4">Register as Patient or Doctor?</h4>
-      <div className="flex flex-col gap-3">
-        <button
-          onClick={() => handleRoleSelect('Patient')}
-          className="bg-[#04838F] hover:bg-[#04838F] text-white py-2 rounded-full"
-        >
-          Patient
-        </button>
-        <button
-          onClick={() => handleRoleSelect('Doctor')}
-          className="bg-[#04838F] hover:bg-[#04838F] text-white py-2 rounded-full"
-        >
-          Doctor
-        </button>
-      </div>
-      <button
-        onClick={() => setShowModal(false)}
-        className="mt-4 w-full border border-[#BBC4C7] py-2 rounded-full hover:bg-gray-100"
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
-)}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
+            <h3 className="text-full font-bold text-[#04838F] mb-10">Register Now</h3>
+            <h4 className="text-lg font-semibold text-gray-800 mb-4">Register as Patient or Doctor?</h4>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => handleRoleSelect('Patient')}
+                className="bg-[#04838F] hover:bg-[#04838F] text-white py-2 rounded-full"
+              >
+                Patient
+              </button>
+              
+              <button
+                onClick={() => handleRoleSelect('Doctor')}
+                className="bg-[#04838F] hover:bg-[#04838F] text-white py-2 rounded-full"
+              >
+                Doctor
+              </button>
+            </div>
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-4 w-full border border-[#BBC4C7] py-2 rounded-full hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );

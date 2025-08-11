@@ -4,6 +4,8 @@ import Home from './Pages/Home';
 import Services from './Pages/ServicesPage';
 import AboutUs from './Pages/AboutUs';
 import ContactUs from './Pages/ContactUs';
+import SignupPage from './Pages/SignUp';
+import LoginPage from './Pages/Login'
 
 function App() {
   return (
