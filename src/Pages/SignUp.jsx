@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { User, Mail, Lock, ChevronDown } from 'lucide-react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // ⬅ added useNavigate
 
 export default function SignupPage() {
   const {
@@ -13,9 +13,10 @@ export default function SignupPage() {
   const [showModal, setShowModal] = useState(false);
   const [formDataToSubmit, setFormDataToSubmit] = useState(null);
 
+  const navigate = useNavigate(); // ⬅ for navigation
+
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-    // Store form data and show role selection modal
     setFormDataToSubmit(data);
     setShowModal(true);
   };
@@ -24,24 +25,23 @@ export default function SignupPage() {
     const finalData = { ...formDataToSubmit, role };
     console.log(`User is signing up as: ${role}`);
     console.log('Creating account with:', finalData);
+
     setShowModal(false);
-    // Continue with account creation logic here
+
+    // ✅ Redirect to /detail-signup/:role and pass form data via state
+    navigate(`/detail-signup/${role}`, { state: finalData });
   };
 
   const handleLogin = () => {
     console.log('Redirecting to login...');
-    // Handle login redirect logic here
   };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      
-      {/* Main Content */}
       <main className="relative z-10 flex items-center justify-between max-w-6xl mx-auto px-4 py-16">
         {/* Sign Up Form */}
         <div className="bg-[#e0e3e4] backdrop-blur-xl rounded-2xl p-8 w-96 shadow-xl">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Sign Up</h2>
-          
           <div className="space-y-4">
             {/* Username */}
             <div className="relative">
@@ -53,7 +53,7 @@ export default function SignupPage() {
                   required: "Username is required",
                   minLength: { value: 3, message: "Username must be at least 3 characters" }
                 })}
-                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 ${
                   errors.username ? 'border-red-500' : 'border-gray-300'
                 }`}
               />
@@ -73,7 +73,7 @@ export default function SignupPage() {
                     message: "Invalid email address" 
                   },
                 })}
-                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 ${
                   errors.email ? 'border-red-500' : 'border-gray-300'
                 }`}
               />
@@ -90,7 +90,7 @@ export default function SignupPage() {
                   required: "Password is required",
                   minLength: { value: 6, message: "Password must be at least 6 characters" }
                 })}
-                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 ${
                   errors.password ? 'border-red-500' : 'border-gray-300'
                 }`}
               />
@@ -108,7 +108,7 @@ export default function SignupPage() {
                     min: { value: 13, message: "Must be at least 13 years old" },
                     max: { value: 120, message: "Please enter a valid age" }
                   })}
-                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 ${
                     errors.age ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
@@ -118,7 +118,7 @@ export default function SignupPage() {
               <div className="relative flex-1">
                 <select
                   {...register("gender", { required: "Please select gender" })}
-                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent appearance-none cursor-pointer ${
+                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 appearance-none cursor-pointer ${
                     errors.gender ? 'border-red-500' : 'border-[#BBC4C7]'
                   }`}
                 >
@@ -136,22 +136,23 @@ export default function SignupPage() {
             {/* Create Account Button */}
             <button
               onClick={handleSubmit(onSubmit)}
-              className="w-full bg-[#04838F] text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors mt-6"
+              className="w-full bg-[#04838F] text-white py-3 rounded-full font-semibold hover:bg-teal-800 mt-6"
             >
               Create Account
             </button>
 
             {/* Login Button */}
             <Link to="/login">
-            <button
-              onClick={handleLogin}
-              className="w-full bg-white text-[#04838F] py-3 rounded-full font-semibold border border-[#04838F] hover:bg-teal-50 transition-colors"
-            >
-              Login
-            </button>
+              <button
+                onClick={handleLogin}
+                className="w-full bg-white text-[#04838F] py-3 rounded-full font-semibold border border-[#04838F] hover:bg-teal-50"
+              >
+                Login
+              </button>
             </Link>
           </div>
         </div>
+     
 
         {/* Doctor Image */}
         <div className="hidden lg:block">
@@ -172,7 +173,7 @@ export default function SignupPage() {
         </div>
       </main>
 
-      {/* Role Selection Modal */}
+     {/* Role Selection Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
@@ -202,7 +203,6 @@ export default function SignupPage() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
