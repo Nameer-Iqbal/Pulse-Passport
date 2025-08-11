@@ -75,7 +75,7 @@ const Navbar = () => {
             </NavLink>
           </nav>
           <NavLink
-            to="/register"
+            to="/signup"
             className="bg-[#04838F] text-white px-4 py-2 rounded-full hover:bg-[#036b74] transition"
           >
             Get Started
