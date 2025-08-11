@@ -11,8 +11,8 @@ const SignupForm = () => {
 
   // Simulate URL-based role detection
   useEffect(() => {
-    const currentPath = window.location.pathname || '/patient/signup';
-    if (currentPath.includes('/doctor/') || currentPath.includes('doctor')) {
+    const currentPath = window.location.pathname || '/detail-signup/';
+    if (currentPath.includes('/Doctor/') || currentPath.includes('Doctor')) {
       setRole('doctor');
     } else {
       setRole('patient');
@@ -47,9 +47,9 @@ const SignupForm = () => {
   };
 
   const renderPatientForm = () => (
-    <div className="w-full max-w-6xl mx-auto bg-gradient-to-br from-gray-200 to-gray-300 rounded-3xl p-8 shadow-2xl">
-      <div className="bg-[#325E6D] text-white text-center py-6 rounded-full mb-8">
-        <h1 className="text-3xl font-bold">Sign Up as Patient</h1>
+    <div className="w-full max-w-6xl mx-auto bg-[#e0e3e4] rounded-3xl p-8 shadow-2xl">
+      <div className="bg-[#325E6D] text-white text-center py-3 rounded-full mb-8">
+        <h1 className="text-xl font-bold">Sign Up as Patient</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -58,11 +58,11 @@ const SignupForm = () => {
           {/* Name Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
-              <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+              <User className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
               <input
                 {...register('firstName', { required: 'First name is required' })}
                 placeholder="First Name"
-                className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               />
               {errors.firstName && <p className="text-red-500 text-sm mt-1 ml-4">{errors.firstName.message}</p>}
             </div>
@@ -70,7 +70,7 @@ const SignupForm = () => {
               <input
                 {...register('lastName')}
                 placeholder="Last Name"
-                className="w-full px-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full px-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               />
               {errors.lastName && <p className="text-red-500 text-sm mt-1 ml-4">{errors.lastName.message}</p>}
             </div>
@@ -78,7 +78,7 @@ const SignupForm = () => {
 
           {/* Email */}
           <div className="relative">
-            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Mail className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('email', { 
                 required: 'Email is required',
@@ -89,30 +89,30 @@ const SignupForm = () => {
               })}
               placeholder="Email Address"
               type="email"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.email && <p className="text-red-500 text-sm mt-1 ml-4">{errors.email.message}</p>}
           </div>
 
           {/* Contact Number */}
           <div className="relative">
-            <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Phone className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('contactNumber', { required: 'Contact number is required' })}
               placeholder="Contact Number"
               type="tel"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.contactNumber && <p className="text-red-500 text-sm mt-1 ml-4">{errors.contactNumber.message}</p>}
           </div>
 
           {/* CNIC */}
           <div className="relative">
-            <CreditCard className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <CreditCard className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('cnic', { required: 'CNIC is required' })}
               placeholder="CNIC"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.cnic && <p className="text-red-500 text-sm mt-1 ml-4">{errors.cnic.message}</p>}
           </div>
@@ -121,20 +121,20 @@ const SignupForm = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
-              <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+              <Calendar className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
               <input
                 {...register('dob', { required: 'Date of birth is required' })}
                 placeholder="Date of Birth"
                 type="date"
-                className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               />
               {errors.dob && <p className="text-red-500 text-sm mt-1 ml-4">{errors.dob.message}</p>}
             </div>
             <div className="relative">
-              <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+              <User className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
               <select
                 {...register('gender', { required: 'Gender is required' })}
-                className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               >
                 <option value="">Gender</option>
                 <option value="male">Male</option>
@@ -147,42 +147,42 @@ const SignupForm = () => {
 
           {/* City */}
           <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <MapPin className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('city', { required: 'City is required' })}
               placeholder="City"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.city && <p className="text-red-500 text-sm mt-1 ml-4">{errors.city.message}</p>}
           </div>
 
           {/* Blood Group */}
           <div className="relative">
-            <Droplet className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Droplet className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('bloodGroup')}
               placeholder="Enter your Blood Group"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
           </div>
 
           {/* Allergies */}
           <div className="relative">
-            <AlertTriangle className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <AlertTriangle className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('allergies')}
               placeholder="Enter Any Allergy"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
           </div>
 
           {/* Chronic Conditions */}
           <div className="relative">
-            <Settings className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Settings className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('chronicConditions')}
               placeholder="Enter Any Chronic Condition"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
           </div>
         </div>
@@ -190,15 +190,15 @@ const SignupForm = () => {
         {/* Right Column - Upload & Actions */}
         <div className="space-y-6">
           {/* Profile Picture */}
-          <div className="bg-white rounded-2xl p-6 text-center">
-            <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4">
-              <Upload className="w-8 h-8 text-gray-400" />
+          <div className="bg-white rounded-2xl px-6 py-3 text-center">
+            <div className="w-12 h-12 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4">
+              <Upload className="w-4 h-4 text-gray-400" />
             </div>
             <p className="text-gray-500 text-sm">Upload a picture here</p>
           </div>
 
           {/* MR Code Generation */}
-          <div className="bg-white rounded-2xl p-6">
+          <div className="bg-white rounded-2xl px-6 py-3">
             <h3 className="text-center font-semibold mb-4">Generate your MR Code</h3>
             <button
               type="button"
@@ -283,7 +283,7 @@ const SignupForm = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#325E6D] text-white py-4 rounded-full text-lg font-semibold hover:bg-[#325E6D] transition-colors"
+            className="w-full bg-[#325E6D] text-white py-2 rounded-full text-lg font-semibold hover:bg-[#325E6D] transition-colors"
           >
             Sign Up
           </button>
@@ -294,8 +294,8 @@ const SignupForm = () => {
 
   const renderDoctorForm = () => (
     <div className="w-full max-w-4xl mx-auto bg-gradient-to-br from-gray-200 to-gray-300 rounded-3xl p-8 shadow-2xl">
-      <div className="bg-[#325E6D] text-white text-center py-6 rounded-2xl mb-8">
-        <h1 className="text-3xl font-bold">Sign Up as Doctor</h1>
+      <div className="bg-[#325E6D] text-white text-center py-3 rounded-full mb-8">
+        <h1 className="text-xl font-bold">Sign Up as Doctor</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -304,11 +304,11 @@ const SignupForm = () => {
           {/* Name Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
-              <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+              <User className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
               <input
                 {...register('firstName', { required: 'First name is required' })}
                 placeholder="First Name"
-                className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               />
               {errors.firstName && <p className="text-red-500 text-sm mt-1 ml-4">{errors.firstName.message}</p>}
             </div>
@@ -316,7 +316,7 @@ const SignupForm = () => {
               <input
                 {...register('lastName', { required: 'Last name is required' })}
                 placeholder="Last Name"
-                className="w-full px-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full px-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               />
               {errors.lastName && <p className="text-red-500 text-sm mt-1 ml-4">{errors.lastName.message}</p>}
             </div>
@@ -324,7 +324,7 @@ const SignupForm = () => {
 
           {/* Email */}
           <div className="relative">
-            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Mail className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('email', { 
                 required: 'Email is required',
@@ -335,30 +335,30 @@ const SignupForm = () => {
               })}
               placeholder="Email Address"
               type="email"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.email && <p className="text-red-500 text-sm mt-1 ml-4">{errors.email.message}</p>}
           </div>
 
           {/* Contact Number */}
           <div className="relative">
-            <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Phone className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('contactNumber', { required: 'Contact number is required' })}
               placeholder="Contact Number"
               type="tel"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-teal-500 focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-teal-500 focus:outline-none text-gray-700"
             />
             {errors.contactNumber && <p className="text-red-500 text-sm mt-1 ml-4">{errors.contactNumber.message}</p>}
           </div>
 
           {/* CNIC */}
           <div className="relative">
-            <CreditCard className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <CreditCard className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('cnic', { required: 'CNIC is required' })}
               placeholder="CNIC"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.cnic && <p className="text-red-500 text-sm mt-1 ml-4">{errors.cnic.message}</p>}
           </div>
@@ -366,20 +366,20 @@ const SignupForm = () => {
           {/* Age and Gender */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
-              <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+              <Calendar className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
               <input
                 {...register('age', { required: 'Age is required' })}
                 placeholder="Age"
                 type="number"
-                className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               />
               {errors.age && <p className="text-red-500 text-sm mt-1 ml-4">{errors.age.message}</p>}
             </div>
             <div className="relative">
-              <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+              <User className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
               <select
                 {...register('gender', { required: 'Gender is required' })}
-                className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+                className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
               >
                 <option value="">Gender</option>
                 <option value="male">Male</option>
@@ -392,67 +392,67 @@ const SignupForm = () => {
 
           {/* City */}
           <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <MapPin className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('city', { required: 'City is required' })}
               placeholder="City"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.city && <p className="text-red-500 text-sm mt-1 ml-4">{errors.city.message}</p>}
           </div>
 
           {/* Specialization */}
           <div className="relative">
-            <Stethoscope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Stethoscope className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('specialization', { required: 'Specialization is required' })}
               placeholder="Specialization"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.specialization && <p className="text-red-500 text-sm mt-1 ml-4">{errors.specialization.message}</p>}
           </div>
 
           {/* Medical License Number */}
           <div className="relative">
-            <FileText className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <FileText className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('medicalLicenseNumber', { required: 'Medical license number is required' })}
               placeholder="Medical License Number"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.medicalLicenseNumber && <p className="text-red-500 text-sm mt-1 ml-4">{errors.medicalLicenseNumber.message}</p>}
           </div>
 
           {/* Issuing Authority */}
           <div className="relative">
-            <Award className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Award className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('issuingAuthority', { required: 'Issuing authority is required' })}
               placeholder="Issuing Authority"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.issuingAuthority && <p className="text-red-500 text-sm mt-1 ml-4">{errors.issuingAuthority.message}</p>}
           </div>
 
           {/* Years of Experience */}
           <div className="relative">
-            <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Calendar className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('yearsOfExperience', { required: 'Years of experience is required' })}
               placeholder="Years of Experience"
               type="number"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.yearsOfExperience && <p className="text-red-500 text-sm mt-1 ml-4">{errors.yearsOfExperience.message}</p>}
           </div>
 
           {/* Hospital/Clinic Affiliation */}
           <div className="relative">
-            <Building className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
+            <Building className="absolute left-3 top-3 text-[#325E6D] w-5 h-5" />
             <input
               {...register('hospitalAffiliation')}
               placeholder="Hospital / Clinic Affiliation"
-              className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
+              className="w-full pl-12 pr-4 py-2 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
           </div>
         </div>
@@ -523,7 +523,7 @@ const SignupForm = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#325E6D] text-white py-4 rounded-full text-lg font-semibold hover:bg-[#325E6D] transition-colors"
+            className="w-full bg-[#325E6D] text-white py-2 rounded-full text-lg font-semibold hover:bg-[#325E6D] transition-colors"
           >
             Sign Up Complete
           </button>
@@ -533,36 +533,7 @@ const SignupForm = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 py-8 px-4">
-      {/* Role Switcher for Demo */}
-      <div className="text-center mb-8">
-        <div className="inline-flex bg-white rounded-full p-1 shadow-lg">
-          <button
-            onClick={() => setRole('patient')}
-            className={`px-6 py-2 rounded-full transition-colors ${
-              role === 'patient' 
-                ? 'bg-[#325E6D] text-white' 
-                : 'text-[#325E6D] hover:bg-teal-50'
-            }`}
-          >
-            Patient Signup
-          </button>
-          <button
-            onClick={() => setRole('doctor')}
-            className={`px-6 py-2 rounded-full transition-colors ${
-              role === 'doctor' 
-                ? 'bg-[#325E6D] text-white' 
-                : 'text-[#325E6D] hover:bg-teal-50'
-            }`}
-          >
-            Doctor Signup
-          </button>
-        </div>
-        <p className="mt-2 text-sm text-gray-600">
-          Current URL simulation: /{role}/signup
-        </p>
-      </div>
-
+    <div className="min-h-screen  py-8 px-4">
       {role === 'patient' ? renderPatientForm() : renderDoctorForm()}
     </div>
   );
