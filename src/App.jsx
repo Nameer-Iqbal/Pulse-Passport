@@ -26,6 +26,9 @@ import BookAppointments from './Pages/PatientDashboard/BookAppointments';
 import Reminders from './Pages/PatientDashboard/Reminders';
 import HelpCenter from './Pages/PatientDashboard/HelpCenter';
 
+// doctor dashboard
+import PatientQueue from '.Pages/DocDashboardlayout/PatientQueue';
+
 function App() {
   return (
     <Routes>
@@ -56,9 +59,16 @@ function App() {
         <Route path="book-appointments" element={<BookAppointments />} />
         <Route path="reminders" element={<Reminders />} />
         <Route path="help-center" element={<HelpCenter />} />
+
+      {/* Dashboard (Doctor) */}
+      <Route path="/DocDashboardLayout" element={<DocDashboardlayout />}></Route>
+      <Route index element={<DocDashboardlayout />} />
+        <Route path="PatientQueue" element={<PatientQueue />} />
+        
       </Route>
     </Routes>
   );
 }
 
 export default App;
+
