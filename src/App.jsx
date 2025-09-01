@@ -9,9 +9,10 @@ import SignupPage from './Pages/SignUp';
 import LoginPage from './Pages/Login';
 import DetailSignUp from './Pages/DetailSignUp';
 
-// ⬅️ Fix: Eesha’s layout lives under Components/DocDashboardLayout
+// ✅ Dono branches ka layout imports
+import DocDashboardLayout from './Components/DocDashboardLayout/Layout';
+import MedicalHome from './Pages/DoctorDashboard/Home';
 import DashboardLayout from './Components/DocDashboardLayout/Layout';
-
 import DashboardHome from './Pages/PatientDashboard/Home';
 import DashboardHistory from './Pages/PatientDashboard/History';
 import HealthSummary from './Pages/PatientDashboard/HealthSummary';
@@ -20,7 +21,7 @@ import SearchDoctor from './Pages/PatientDashboard/SearchDoctor';
 import Reports from './Pages/PatientDashboard/Reports';
 import Settings from './Pages/PatientDashboard/Settings';
 
-// ⬇️ New pages Eesha added (present in your git status)
+// ⬇️ New pages Eesha added
 import UpcomingAppointments from './Pages/PatientDashboard/UpcomingAppointments';
 import BookAppointments from './Pages/PatientDashboard/BookAppointments';
 import Reminders from './Pages/PatientDashboard/Reminders';
@@ -65,6 +66,13 @@ function App() {
       <Route index element={<DocDashboardlayout />} />
         <Route path="PatientQueue" element={<PatientQueue />} />
         
+      </Route>
+
+      {/* Dashboard (doctor) */}
+      <Route path="/docdashboard" element={<DocDashboardLayout />}>
+        <Route index element={<MedicalHome />} />
+        <Route path="home" element={<MedicalHome />} />
+        {/* Agar doctor ke aur pages hain, wo yahan add karo */}
       </Route>
     </Routes>
   );
