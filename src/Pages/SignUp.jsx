@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { User, Mail, Lock, ChevronDown } from 'lucide-react';
+import { User, Mail, Lock } from 'lucide-react';
 import { Link } from "react-router-dom";
 
 export default function SignupPage() {
@@ -8,6 +8,7 @@ export default function SignupPage() {
     register,
     handleSubmit,
     formState: { errors },
+    watch
   } = useForm();
 
   const [showModal, setShowModal] = useState(false);
@@ -15,7 +16,6 @@ export default function SignupPage() {
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-    // Store form data and show role selection modal
     setFormDataToSubmit(data);
     setShowModal(true);
   };
@@ -25,23 +25,20 @@ export default function SignupPage() {
     console.log(`User is signing up as: ${role}`);
     console.log('Creating account with:', finalData);
     setShowModal(false);
-    // Continue with account creation logic here
   };
 
   const handleLogin = () => {
     console.log('Redirecting to login...');
-    // Handle login redirect logic here
   };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      
       {/* Main Content */}
       <main className="relative z-10 flex items-center justify-between max-w-6xl mx-auto px-4 py-16">
         {/* Sign Up Form */}
         <div className="bg-[#e0e3e4] backdrop-blur-xl rounded-2xl p-8 w-96 shadow-xl">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Sign Up</h2>
-          
+
           <div className="space-y-4">
             {/* Username */}
             <div className="relative">
@@ -49,7 +46,7 @@ export default function SignupPage() {
               <input
                 type="text"
                 placeholder="Username"
-                {...register("username", { 
+                {...register("username", {
                   required: "Username is required",
                   minLength: { value: 3, message: "Username must be at least 3 characters" }
                 })}
@@ -68,9 +65,9 @@ export default function SignupPage() {
                 placeholder="Email Address"
                 {...register("email", {
                   required: "Email is required",
-                  pattern: { 
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 
-                    message: "Invalid email address" 
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address"
                   },
                 })}
                 className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
@@ -97,40 +94,34 @@ export default function SignupPage() {
               {errors.password && <p className="text-red-500 text-sm mt-1 ml-4">{errors.password.message}</p>}
             </div>
 
-            {/* Age & Gender */}
-            <div className="flex space-x-4">
-              <div className="flex-1">
-                <input
-                  type="number"
-                  placeholder="Age"
-                  {...register("age", {
-                    required: "Age is required",
-                    min: { value: 13, message: "Must be at least 13 years old" },
-                    max: { value: 120, message: "Please enter a valid age" }
-                  })}
-                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
-                    errors.age ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                />
-                {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age.message}</p>}
-              </div>
-              
-              <div className="relative flex-1">
-                <select
-                  {...register("gender", { required: "Please select gender" })}
-                  className={`w-full px-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent appearance-none cursor-pointer ${
-                    errors.gender ? 'border-red-500' : 'border-[#BBC4C7]'
-                  }`}
-                >
-                  <option value="">Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                  <option value="Prefer not to say">Prefer not to say</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-4  w-5 h-5 pointer-events-none" />
-                {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>}
-              </div>
+            {/* Confirm Password */}
+            <div className="relative">
+              <Lock className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                {...register("confirmPassword", {
+                  required: "Please confirm your password",
+                  validate: (value) =>
+                    value === watch("password") || "Passwords do not match"
+                })}
+                className={`w-full pl-12 pr-4 py-3 bg-white border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent ${
+                  errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                }`}
+              />
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1 ml-4">{errors.confirmPassword.message}</p>
+              )}
+            </div>
+
+            {/* Verify Email Button (smaller & centered) */}
+            <div className="flex justify-center">
+              <button
+                type="button"
+                className="w-1/2 bg-[#04838F] text-white py-2 rounded-full font-semibold hover:bg-teal-800 transition-colors mt-2"
+              >
+                Verify Email
+              </button>
             </div>
 
             {/* Create Account Button */}
@@ -143,12 +134,12 @@ export default function SignupPage() {
 
             {/* Login Button */}
             <Link to="/login">
-            <button
-              onClick={handleLogin}
-              className="w-full bg-white text-[#04838F] py-3 rounded-full font-semibold border border-[#04838F] hover:bg-teal-50 transition-colors"
-            >
-              Login
-            </button>
+              <button
+                onClick={handleLogin}
+                className="w-full bg-white text-[#04838F] py-3 rounded-full font-semibold border border-[#04838F] hover:bg-teal-50 transition-colors"
+              >
+                Login
+              </button>
             </Link>
           </div>
         </div>
@@ -163,7 +154,6 @@ export default function SignupPage() {
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Decorative dots */}
             <div className="absolute -top-4 -right-4 w-8 h-8 bg-red-400 rounded-full"></div>
             <div className="absolute -bottom-8 -left-8 w-6 h-6 bg-blue-400 rounded-full"></div>
             <div className="absolute top-1/4 -left-6 w-4 h-4 bg-yellow-400 rounded-full"></div>
@@ -185,7 +175,7 @@ export default function SignupPage() {
               >
                 Patient
               </button>
-              
+
               <button
                 onClick={() => handleRoleSelect('Doctor')}
                 className="bg-[#04838F] hover:bg-[#04838F] text-white py-2 rounded-full"
@@ -202,7 +192,6 @@ export default function SignupPage() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
