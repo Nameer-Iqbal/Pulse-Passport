@@ -73,9 +73,7 @@ const SignupForm = () => {
               className="w-full px-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
             />
             {errors.lastName && <p className="text-red-500 text-sm mt-1 ml-4">{errors.lastName.message}</p>}
-          </div>
-        </div>
-
+          </div>        </div>
 
         {/* Contact Number */}
         <div className="relative">
