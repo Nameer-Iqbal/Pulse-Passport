@@ -1,39 +1,42 @@
-import { Routes, Route } from 'react-router-dom';
-import Layout from './Components/Layout/Layout';
+import { Routes, Route } from "react-router-dom";
 
-import Home from './Pages/Home';
-import Services from './Pages/ServicesPage';
-import AboutUs from './Pages/AboutUs';
-import ContactUs from './Pages/ContactUs';
-import SignupPage from './Pages/SignUp';
-import LoginPage from './Pages/Login';
-import DetailSignUp from './Pages/DetailSignUp';
+// 🌐 Public Website Layout & Pages
+import Layout from "./Components/Layout/Layout";
+import Home from "./Pages/Home";
+import Services from "./Pages/ServicesPage";
+import AboutUs from "./Pages/AboutUs";
+import ContactUs from "./Pages/ContactUs";
+import SignupPage from "./Pages/SignUp";
+import LoginPage from "./Pages/Login";
+import DetailSignUp from "./Pages/DetailSignUp";
 
-// ⬅️ Fix: Eesha’s layout lives under Components/DocDashboardLayout
-import DocDashboardLayout from './Components/DocDashboardLayout/Layout';
-import MedicalHome from './Pages/DoctorDashboard/Home';
+// 🧑‍ Patient Dashboard Layout & Pages
+import DashboardLayout from "./Components/DashboardLayout/Layout";
+import DashboardHome from "./Pages/PatientDashboard/Home";
+import DashboardHistory from "./Pages/PatientDashboard/History";
+import HealthSummary from "./Pages/PatientDashboard/HealthSummary";
+import Prescriptions from "./Pages/PatientDashboard/Prescriptions";
+import SearchDoctor from "./Pages/PatientDashboard/SearchDoctor";
+import Reports from "./Pages/PatientDashboard/Reports";
+import Settings from "./Pages/PatientDashboard/Settings";
 
+// ➕ Extra Patient Dashboard Pages
+import UpcomingAppointments from "./Pages/PatientDashboard/UpcomingAppointments";
+import BookAppointments from "./Pages/PatientDashboard/BookAppointments";
+import Reminders from "./Pages/PatientDashboard/Reminders";
+import HelpCenter from "./Pages/PatientDashboard/HelpCenter";
 
-
-import DashboardLayout from './Components/DashboardLayout/Layout';
-import DashboardHome from './Pages/PatientDashboard/Home';
-import DashboardHistory from './Pages/PatientDashboard/History';
-import HealthSummary from './Pages/PatientDashboard/HealthSummary';
-import Prescriptions from './Pages/PatientDashboard/Prescriptions';
-import SearchDoctor from './Pages/PatientDashboard/SearchDoctor';
-import Reports from './Pages/PatientDashboard/Reports';
-import Settings from './Pages/PatientDashboard/Settings';
-
-// ⬇️ New pages Eesha added (present in your git status)
-import UpcomingAppointments from './Pages/PatientDashboard/UpcomingAppointments';
-import BookAppointments from './Pages/PatientDashboard/BookAppointments';
-import Reminders from './Pages/PatientDashboard/Reminders';
-import HelpCenter from './Pages/PatientDashboard/HelpCenter';
+// 👨‍⚕️ Doctor Dashboard Layout & Pages
+import DocDashboardLayout from "./Components/DocDashboardLayout/Layout";
+import MedicalHome from "./Pages/DoctorDashboard/Home";
+import AppointmentsDashboard from "./Pages/DoctorDashboard/Appointments";
+import AIinsights from "./Pages/DoctorDashboard/AI-Insights";
+import DocHelpCenter from "./Pages/DoctorDashboard/HelpCenter";
 
 function App() {
   return (
     <Routes>
-      {/* Public Website Pages */}
+      {/* 🌐 Public Website Pages */}
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
@@ -44,7 +47,7 @@ function App() {
         <Route path="/detail-signup/:role" element={<DetailSignUp />} />
       </Route>
 
-      {/* Dashboard (patient) */}
+      {/* 🧑‍ Patient Dashboard */}
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardHome />} />
         <Route path="home" element={<DashboardHome />} />
@@ -55,22 +58,23 @@ function App() {
         <Route path="reports" element={<Reports />} />
         <Route path="settings" element={<Settings />} />
 
-        {/* extra sections Eesha added */}
+        {/* Extra Sections */}
         <Route path="upcoming-appointments" element={<UpcomingAppointments />} />
         <Route path="book-appointments" element={<BookAppointments />} />
         <Route path="reminders" element={<Reminders />} />
         <Route path="help-center" element={<HelpCenter />} />
       </Route>
 
+      {/* 👨‍⚕️ Doctor Dashboard */}
       <Route path="/docdashboard" element={<DocDashboardLayout />}>
         <Route index element={<MedicalHome />} />
         <Route path="home" element={<MedicalHome />} />
-        {/* Agar doctor ke aur pages hain, wo yahan add karo */}
+        <Route path="appointments" element={<AppointmentsDashboard />} />
+        <Route path="aiinsights" element={<AIinsights />} />
+        <Route path="helpcenter" element={<DocHelpCenter />} />
       </Route>
-
     </Routes>
   );
 }
 
 export default App;
-

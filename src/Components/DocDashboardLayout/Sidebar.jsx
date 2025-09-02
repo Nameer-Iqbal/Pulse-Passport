@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import medicineBg from "../../assets/medicineBg.png";
 import {
   FaHome,
@@ -13,6 +14,10 @@ import {
 } from "react-icons/fa";
 
 const DoctorSidebar = () => {
+  // Common styles for all links
+  const linkClasses =
+    "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition";
+
   return (
     <div
       className="w-64 h-screen text-white flex flex-col justify-between"
@@ -38,38 +43,109 @@ const DoctorSidebar = () => {
 
         {/* Navigation */}
         <nav className="mt-6 space-y-2">
-          <a href="#" className="flex items-center gap-3 bg-white text-gray-900 px-3 py-2 rounded-lg text-sm">
+          <NavLink
+            to="/docdashboard/home"
+            className={({ isActive }) =>
+              `${linkClasses} ${
+                isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+              }`
+            }
+          >
             <FaHome /> Home
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+          </NavLink>
+
+          <NavLink
+            to="/docdashboard/appointments"
+            className={({ isActive }) =>
+              `${linkClasses} ${
+                isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+              }`
+            }
+          >
             <FaCalendarCheck /> Appointments
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+          </NavLink>
+
+          <NavLink
+            to="/docdashboard/patient-queue"
+            className={({ isActive }) =>
+              `${linkClasses} ${
+                isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+              }`
+            }
+          >
             <FaUsers /> Patient Queue
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+          </NavLink>
+
+          <NavLink
+            to="/docdashboard/aiinsights"
+            className={({ isActive }) =>
+              `${linkClasses} ${
+                isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+              }`
+            }
+          >
             <FaBrain /> AI Insights
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+          </NavLink>
+
+          <NavLink
+            to="/docdashboard/consultation"
+            className={({ isActive }) =>
+              `${linkClasses} ${
+                isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+              }`
+            }
+          >
             <FaStethoscope /> Consultation
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+          </NavLink>
+
+          <NavLink
+            to="/docdashboard/telemedicine"
+            className={({ isActive }) =>
+              `${linkClasses} ${
+                isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+              }`
+            }
+          >
             <FaVideo /> Telemedicine
-          </a>
+          </NavLink>
         </nav>
       </div>
 
       {/* Bottom Section */}
       <div className="p-4 space-y-2">
-        <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+        <NavLink
+          to="/docdashboard/settings"
+          className={({ isActive }) =>
+            `${linkClasses} ${
+              isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+            }`
+          }
+        >
           <FaCog /> Settings
-        </a>
-        <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+        </NavLink>
+
+        <NavLink
+          to="/docdashboard/helpcenter"
+          className={({ isActive }) =>
+            `${linkClasses} ${
+              isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+            }`
+          }
+        >
           <FaQuestionCircle /> Help Center
-        </a>
-        <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-lg text-sm">
+        </NavLink>
+
+        {/* Logout */}
+        <NavLink
+          to="/logout"
+          className={({ isActive }) =>
+            `${linkClasses} ${
+              isActive ? "bg-white text-gray-900" : "hover:bg-gray-700"
+            }`
+          }
+        >
           <FaSignOutAlt /> Logout
-        </a>
+        </NavLink>
       </div>
     </div>
   );

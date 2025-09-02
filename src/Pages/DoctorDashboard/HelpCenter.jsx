@@ -156,7 +156,7 @@ const HelpSection = () => {
   );
 };
 
-const DocHelpCenter = () => {
+const HelpCenter = () => {
   return (
     <div
       style={{
@@ -172,4 +172,4 @@ const DocHelpCenter = () => {
   );
 };
 
-export default DocHelpCenter;
+export default HelpCenter;
