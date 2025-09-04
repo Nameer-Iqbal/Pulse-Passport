@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MessageCircle, Mic, Camera } from 'lucide-react';
+import AIChatbotPopup from "../../Components/AIChatbotPopup"; // 
 
 // Search Bar Component with Dropdown
 const SearchBar = () => {
@@ -176,27 +177,7 @@ const NavigationButtons = () => {
   );
 };
 
-// Chat Bot
-const ChatBot = () => {
-  return (
-    <div className="px-4 py-2">
-      <div className="bg-[#D9D9D9] rounded-full px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <MessageCircle className="w-4 h-4 text-[#0E4456]" />
-          <span className="text-[#0E4456] text-xs font-medium">ASK A.I CHATBOT</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <button>
-            <Mic className="w-4 h-4 text-[#0E4456]" />
-          </button>
-          <button>
-            <Camera className="w-4 h-4 text-[#0E4456]" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+
 
 // Main App
 const MedicalDashboard = () => {
@@ -211,7 +192,7 @@ const MedicalDashboard = () => {
         </div>
       </div>
       <NavigationButtons />
-      <ChatBot />
+      <AIChatbotPopup />
     </div>
   );
 };

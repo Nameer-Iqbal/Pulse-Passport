@@ -1,5 +1,6 @@
 import React from "react";
 import { Search } from "lucide-react";
+import AIChatbotPopup from "../../Components/AIChatbotPopup";
 
 const SearchBar = () => {
   return (
@@ -156,7 +157,7 @@ const HelpSection = () => {
   );
 };
 
-const DocHelpCenter = () => {
+const PatientHelpCenter = () => {
   return (
     <div
       style={{
@@ -168,8 +169,9 @@ const DocHelpCenter = () => {
     >
       <SearchBar />
       <HelpSection />
+      <AIChatbotPopup />
     </div>
   );
 };
 
-export default DocHelpCenter;
+export default PatientHelpCenter;

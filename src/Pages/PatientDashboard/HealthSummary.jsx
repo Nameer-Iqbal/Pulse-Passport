@@ -1,5 +1,7 @@
 import React from "react";
 import { Activity, Heart, Droplet, Thermometer } from "lucide-react";
+import AIChatbotPopup from "../../Components/AIChatbotPopup";
+
 
 const colors = {
   primary: "#628B98",
@@ -44,6 +46,8 @@ const HealthSummary = () => {
           ))}
         </div>
       </div>
+      {/* Floating AI Chatbot */}
+      <AIChatbotPopup />
     </div>
   );
 };

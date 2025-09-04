@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { User, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const {
@@ -9,12 +11,30 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log("Form submitted:", data);
-    // Handle login logic here
+  const onSubmit = async (data) => {
+    try {
+      // Replace with your actual backend API
+      const res = await axios.post("/api/login", {
+        email: data.email,
+        password: data.password,
+      }); 
+      // Save token locally
+      localStorage.setItem("token", res.data.token);
+
+      // Role-based redirect
+      if (res.data.role === "doctor") {
+        navigate("/doctor-dashboard");
+      } else if (res.data.role === "patient") {
+        navigate("/patient-dashboard");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Login failed. Check credentials.");
+    }
   };
-
+    
   const handleForgotPassword = () => {
     console.log("Forgot password clicked");
     // Handle forgot password logic here
@@ -34,14 +54,12 @@ export default function LoginPage() {
               <User className="absolute left-3 top-4 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Username"
-                {...register("username", { required: "Username is required" })}
+                placeholder="Email"
+                {...register("email", { required: "Email is required" })}
                 className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
               />
-              {errors.username && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.username.message}
-                </p>
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
               )}
             </div>
 

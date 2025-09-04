@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Plus } from 'lucide-react';
+import AIChatbotPopup from "../../Components/AIChatbotPopup";
 
 // Search Bar Component
 const SearchBar = ({ searchTerm, setSearchTerm }) => {
@@ -351,8 +352,8 @@ const PrescriptionsPage = () => {
         />
       </div>
       
-      {/* Floating Button */}
-      <FloatingButton onAdd={addNewPrescription} />
+      {/* Floating AI Chatbot */}
+      <AIChatbotPopup />
     </div>
   );
 };

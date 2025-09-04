@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { User, Mail, Lock } from 'lucide-react';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 export default function SignupPage() {
   const {
+    
     register,
     handleSubmit,
     formState: { errors },
     watch
   } = useForm();
+    const navigate = useNavigate();
+
 
   const [showModal, setShowModal] = useState(false);
   const [formDataToSubmit, setFormDataToSubmit] = useState(null);
@@ -21,11 +26,17 @@ export default function SignupPage() {
   };
 
   const handleRoleSelect = (role) => {
-    const finalData = { ...formDataToSubmit, role };
-    console.log(`User is signing up as: ${role}`);
-    console.log('Creating account with:', finalData);
-    setShowModal(false);
-  };
+  const finalData = { ...formDataToSubmit, role };
+  console.log(`User is signing up as: ${role}`);
+  console.log("Creating account with:", finalData);
+
+  setShowModal(false);
+
+  //  Role param + state bhejo
+  navigate(`/detail-signup/${role}`, { state: finalData });
+};
+
+
 
   const handleLogin = () => {
     console.log('Redirecting to login...');

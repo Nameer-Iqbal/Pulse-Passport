@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Search, Calendar, User, Send, ChevronDown } from "lucide-react";
+import AIChatbotPopup from "../../Components/AIChatbotPopup"; // 
 
 const SearchDoctorsScreen = () => {
   const [specialty, setSpecialty] = useState("");
@@ -137,24 +138,8 @@ const SearchDoctorsScreen = () => {
       </div>
 
       {/* Chatbot */}
-      <div className="mt-auto px-4 pb-6">
-        <div className="bg-white rounded-full px-6 py-2 flex items-center shadow-md max-w-lg mx-auto border-2 border-[#0E4456]">
-          <User className="w-4 h-4 mr-3 text-[#0E4456]" />
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="ASK AT CHATBOT"
-            className="flex-1 text-sm focus:outline-none text-[#0E4456]"
-          />
-          <button
-            onClick={handleSendMessage}
-            className="transition hover:opacity-70 text-[#0E4456]"
-          >
-            <Send className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
+      {/* Floating AI Chatbot */}
+      <AIChatbotPopup />
     </div>
   );
 };

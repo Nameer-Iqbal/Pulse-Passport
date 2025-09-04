@@ -9,6 +9,7 @@ import ContactUs from "./Pages/ContactUs";
 import SignupPage from "./Pages/SignUp";
 import LoginPage from "./Pages/Login";
 import DetailSignUp from "./Pages/DetailSignUp";
+import AIChatbotPopup from "./Components/AIChatbotPopup";
 
 // 🧑‍ Patient Dashboard Layout & Pages
 import DashboardLayout from "./Components/DashboardLayout/Layout";

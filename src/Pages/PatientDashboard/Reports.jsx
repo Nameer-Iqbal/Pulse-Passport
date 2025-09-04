@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Prescriptions from "./Prescriptions";
+
 import { 
   Search, 
   ChevronDown, 
@@ -10,6 +12,9 @@ import {
   MessageCircle, 
   Eye 
 } from 'lucide-react';
+import AIChatbotPopup from "../../Components/AIChatbotPopup";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function ReportsScreen() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,9 +45,6 @@ export default function ReportsScreen() {
     }
   };
 
-  const handleAction = (action, imageId = null) => {
-    console.log(`${action} action triggered`, imageId ? `for image ${imageId}` : '');
-  };
 
   const styles = {
     container: {
@@ -261,7 +263,15 @@ export default function ReportsScreen() {
     },
     hiddenInput: { display: 'none' }
   };
-
+  
+  const navigate = useNavigate();
+  const handleAction = (action, imageId = null) => {
+    if(action === 'prescriptions') {
+      navigate('/dashboard/prescriptions');
+    } else {
+      console.log(`${action} action triggered`, imageId ? `for image ${imageId}` : '');
+    }
+  };
   return (
     <div style={styles.container}>
       <div style={styles.mainContainer}>
@@ -380,15 +390,7 @@ export default function ReportsScreen() {
         </div>
 
         {/* Chatbot */}
-        <div style={styles.chatbotContainer}>
-          <button
-            onClick={() => handleAction('ai-chat')}
-            style={styles.chatbotButton}
-            title="AI Chatbot"
-          >
-            <MessageCircle size={22} color="#0E4456" />
-          </button>
-        </div>
+        <AIChatbotPopup />
       </div>
     </div>
   );

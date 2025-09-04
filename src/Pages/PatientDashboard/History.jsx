@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AIChatbotPopup from "../../Components/AIChatbotPopup";
 
 const MedicalHistoryScreen = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,10 +65,7 @@ const MedicalHistoryScreen = () => {
     alert('Navigating to Diagnostic Reports Screen');
   };
 
-  const handleAiChatBot = () => {
-    console.log('Opening AI Chat Bot');
-    alert('Opening AI Chat Bot');
-  };
+  
 
   return (
     <div
@@ -337,33 +335,7 @@ const MedicalHistoryScreen = () => {
         </div>
 
         {/* AI Chat Bot */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '25px',
-            right: '25px',
-          }}
-        >
-          <button
-            onClick={handleAiChatBot}
-            style={{
-              width: '60px',
-              height: '60px',
-              backgroundColor: '#C9DCE2',
-              border: 'none',
-              borderRadius: '50%',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-            }}
-          >
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="#0E4456">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-            </svg>
-          </button>
-        </div>
+        <AIChatbotPopup />
       </div>
     </div>
   );

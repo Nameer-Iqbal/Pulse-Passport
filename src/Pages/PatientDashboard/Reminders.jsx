@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Star, Mic, Phone } from 'lucide-react';
+import AIChatbotPopup from "../../Components/AIChatbotPopup";
 
 // Header Component
 const Header = () => {
@@ -166,17 +167,6 @@ const SMSReminder = () => {
   );
 };
 
-// Chatbot Component
-const ChatbotInterface = () => {
-  return (
-    <div className="bg-gray-300 rounded-lg p-4 flex items-center" style={{ backgroundColor: '#D9D9D9' }}>
-      <Star size={24} className="mr-3" style={{ color: '#0E4456' }} />
-      <span className="text-gray-700 flex-1">ASK AI CHATBOT</span>
-      <Mic size={20} className="mr-3 text-gray-600 cursor-pointer" />
-      <Phone size={20} className="text-gray-600 cursor-pointer" />
-    </div>
-  );
-};
 
 // Main App Component
 const MedicationReminderApp = () => {
@@ -191,7 +181,7 @@ const MedicationReminderApp = () => {
         </div>
         
         <SMSReminder />
-        <ChatbotInterface />
+        <AIChatbotPopup />
       </div>
     </div>
   );

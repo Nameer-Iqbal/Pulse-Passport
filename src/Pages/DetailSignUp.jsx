@@ -1,23 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Upload, Copy, User, Mail, Phone, CreditCard, MapPin, Droplet, AlertTriangle, Settings, Stethoscope, FileText, Building, Calendar, Award } from 'lucide-react';
+import { useLocation, useParams } from "react-router-dom";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const SignupForm = () => {
+
   const [role, setRole] = useState('patient');
   const [mrCode, setMrCode] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState({});
 
   const { register, handleSubmit,  formState: { errors } } = useForm();
+  const { role: roleFromParams } = useParams();
+  const location = useLocation();
+  const signupData = location.state || {}; 
+  
+  const navigate = useNavigate();
+
 
   // Simulate URL-based role detection
   useEffect(() => {
-    const currentPath = window.location.pathname || '/patient/signup';
-    if (currentPath.includes('/doctor/') || currentPath.includes('doctor')) {
-      setRole('doctor');
-    } else {
-      setRole('patient');
-    }
-  }, []);
+  if (signupData?.role) {
+    setRole(signupData.role.toLowerCase());
+  } else if (roleFromParams) {
+    setRole(roleFromParams.toLowerCase());
+  }
+  }, [signupData, roleFromParams]);
+
+
 
   // Generate MR Code
   const generateMRCode = () => {
@@ -36,10 +48,34 @@ const SignupForm = () => {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log('Form Data:', { ...data, role, mrCode, uploadedFiles });
-    alert(`${role.charAt(0).toUpperCase() + role.slice(1)} registration submitted successfully!`);
+  const onSubmit = async (data) => {
+    try {
+      // Include role, MR code, uploaded files
+      const payload = { ...data, role, mrCode, uploadedFiles };
+      
+      // Call backend signup API
+      const res = await axios.post('/api/signup', payload);
+
+      // Save token if backend returns one
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
+
+      // Redirect based on role
+      if (role === 'doctor') {
+        navigate('/doctor-dashboard')
+      } else if (role === 'patient') {
+        navigate('/patient-dashboard');
+      }
+
+      alert(`${role.charAt(0).toUpperCase() + role.slice(1)} registration successful!`)
+
+    } catch (err) {
+      console.error(err);
+      alert('Signup failed. Please try again.');
+    }
   };
+  
 
   const copyMRCode = () => {
     navigator.clipboard.writeText(mrCode);
@@ -60,6 +96,7 @@ const SignupForm = () => {
           <div className="relative">
             <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
             <input
+              defaultValue={signupData?.username}  
               {...register('firstName', { required: 'First name is required' })}
               placeholder="First Name"
               className="w-full pl-12 pr-4 py-4 bg-white rounded-full border-2 border-gray-300 focus:border-[#325E6D] focus:outline-none text-gray-700"
@@ -173,11 +210,22 @@ const SignupForm = () => {
       <div className="space-y-6">
         {/* Profile Picture */}
         <div className="bg-white rounded-2xl p-6 text-center">
-          <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4">
-            <Upload className="w-8 h-8 text-gray-400" />
-          </div>
-          <p className="text-gray-500 text-sm">Upload a picture here</p>
+          <label className="cursor-pointer block">
+            <input
+            type="file"
+            className="hidden"
+            onChange={(e) => handleFileUpload("profilePicture", e)}
+            accept="image/*"
+           />
+           <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4 hover:bg-gray-300 transition">
+            <Upload className="w-8 h-8 text-gray-500" />
+           </div>
+           <p className="text-gray-500 text-sm">
+            {uploadedFiles.profilePicture ? uploadedFiles.profilePicture : "Upload a picture"}
+           </p>
+          </label>
         </div>
+           
 
         {/* MR Code Generation */}
         <div className="bg-white rounded-2xl p-6">
@@ -209,8 +257,8 @@ const SignupForm = () => {
               onChange={(e) => handleFileUpload('cnic', e)}
               accept="image/*,.pdf"
             />
-            <div className="bg-[#325E6D] text-white py-2 px-4 rounded-full text-sm hover:bg-[#325E6D] transition-colors">
-              Upload Image or PDF
+            <div className="bg-[#325E6D] text-white py-2 px-4 rounded-full text-sm hover:bg-[#24464f] transition-colors">
+             {uploadedFiles.cnic ? `Uploaded: ${uploadedFiles.cnic}` : "Upload Image or PDF"}   
             </div>
           </label>
         </div>
@@ -262,6 +310,7 @@ const SignupForm = () => {
           <div className="relative">
             <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#325E6D] w-5 h-5" />
             <input
+              defaultValue={signupData?.email}
               {...register('email', { 
                 required: 'Email is required',
                 pattern: {
@@ -396,12 +445,22 @@ const SignupForm = () => {
         {/* Right Column - Upload & Actions */}
         <div className="space-y-6">
           {/* Profile Picture */}
-          <div className="bg-white rounded-2xl p-6 text-center">
-            <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4">
+          <div className="bg-white rounded-2xl p-6 text-center mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xs xl:max-w-sm">
+            <label className="cursor-pointer block">
+              <input
+              type="file"
+              className="hidden"
+              onChange={(e) => handleFileUpload("profilePicture", e)}
+              accept="image/*"
+            />
+            <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4 hover:bg-gray-300 transition">
               <Upload className="w-8 h-8 text-gray-400" />
             </div>
             <p className="text-gray-500 text-sm">Upload a picture here</p>
+            </label>
+            
           </div>
+          
 
           {/* MR Code Generation */}
           <div className="bg-white rounded-2xl p-6">
@@ -434,8 +493,8 @@ const SignupForm = () => {
                   onChange={(e) => handleFileUpload('degrees', e)}
                   accept=".pdf"
                 />
-                <div className="bg-[#325E6D] text-white py-2 px-4 rounded-full text-sm hover:bg-[#325E6D] transition-colors">
-                  Upload MBBS,FCPS,MD,etc
+                <div className="bg-[#325E6D] text-white py-2 px-4 rounded-full text-sm hover:bg-[#24464f] transition-colors">
+                 {uploadedFiles.degrees ? `Uploaded: ${uploadedFiles.degrees}` : "Upload MBBS, FCPS, MD, etc"}
                 </div>
               </label>
             </div>
