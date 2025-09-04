@@ -52,8 +52,7 @@ const DoctorSettingsScreen = () => {
   return (
     <div style={{
       backgroundColor: '#EAEAEA',
-      minHeight: '150vh',
-      maxHeight: '100vh',
+      minHeight: '100vh',
       padding: '30px',
       fontFamily: 'Arial, sans-serif',
       overflowY: 'auto'
@@ -123,12 +122,14 @@ const DoctorSettingsScreen = () => {
                     />
                   ) : (
                     <svg 
-                      width="50" 
-                      height="50" 
+                      width="90" 
+                      height="90" 
                       viewBox="0 0 24 24" 
                       fill="white"
                     >
-                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
+                        1.79-4 4 1.79 4 4 4zm0 2c-2.67 
+                        0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                   )}
                 </div>
@@ -144,137 +145,30 @@ const DoctorSettingsScreen = () => {
 
             {/* Profile Information */}
             <div style={{ marginBottom: '25px' }}>
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '5px',
-                  textAlign: 'left'
-                }}>NAME :</label>
-                <input
-                  type="text"
-                  value={profileData.name}
-                  onChange={(e) => handleProfileChange('name', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '5px',
-                  textAlign: 'left'
-                }}>SPECIALIZATION :</label>
-                <input
-                  type="text"
-                  value={profileData.specialization}
-                  onChange={(e) => handleProfileChange('specialization', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '5px',
-                  textAlign: 'left'
-                }}>HOSPITAL :</label>
-                <input
-                  type="text"
-                  value={profileData.hospital}
-                  onChange={(e) => handleProfileChange('hospital', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '5px',
-                  textAlign: 'left'
-                }}>EXPERIENCE :</label>
-                <input
-                  type="text"
-                  value={profileData.experience}
-                  onChange={(e) => handleProfileChange('experience', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '5px',
-                  textAlign: 'left'
-                }}>QUALIFICATION :</label>
-                <input
-                  type="text"
-                  value={profileData.qualification}
-                  onChange={(e) => handleProfileChange('qualification', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '5px',
-                  textAlign: 'left'
-                }}>CERTIFICATE :</label>
-                <input
-                  type="text"
-                  value={profileData.certificate}
-                  onChange={(e) => handleProfileChange('certificate', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                />
-              </div>
+              {['name','specialization','hospital','experience','qualification','certificate']
+                .map((field, index) => (
+                <div key={index} style={{ marginBottom: '15px' }}>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '5px',
+                    textAlign: 'left'
+                  }}>{field.toUpperCase()} :</label>
+                  <input
+                    type="text"
+                    value={profileData[field]}
+                    onChange={(e) => handleProfileChange(field, e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px',
+                      border: '1px solid #ddd',
+                      borderRadius: '5px',
+                      fontSize: '14px'
+                    }}
+                  />
+                </div>
+              ))}
             </div>
 
             {/* Confirm Changes Button */}
@@ -294,159 +188,6 @@ const DoctorSettingsScreen = () => {
               >
                 Confirm Changes
               </button>
-            </div>
-          </div>
-
-          {/* Availability & Schedule Container */}
-          <div style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '20px',
-            padding: '25px',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            height: '300px'
-          }}>
-            <h2 style={{
-              margin: '0 0 20px 0',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              textAlign: 'left'
-            }}>Availability & Schedule</h2>
-            
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{
-                display: 'block',
-                fontSize: '14px',
-                marginBottom: '10px',
-                textAlign: 'left'
-              }}>Set Available Hours</label>
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '15px' }}>
-                <input
-                  type="time"
-                  value={availableHours}
-                  onChange={(e) => setAvailableHours(e.target.value)}
-                  style={{
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                />
-                <button
-                  onClick={handleSetAvailableHours}
-                  style={{
-                    backgroundColor: '#0E4456',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '15px',
-                    padding: '8px 15px',
-                    fontSize: '12px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Set
-                </button>
-              </div>
-            </div>
-
-            <div style={{ marginBottom: '20px' }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '15px'
-              }}>
-                <label style={{
-                  fontSize: '14px',
-                  textAlign: 'left'
-                }}>Vacation Mode</label>
-                
-                <label style={{
-                  position: 'relative',
-                  display: 'inline-block',
-                  width: '50px',
-                  height: '25px'
-                }}>
-                  <input
-                    type="checkbox"
-                    checked={vacationMode}
-                    onChange={(e) => setVacationMode(e.target.checked)}
-                    style={{ opacity: 0, width: 0, height: 0 }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    cursor: 'pointer',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: vacationMode ? '#0E4456' : '#ccc',
-                    borderRadius: '25px',
-                    transition: 'background-color 0.3s'
-                  }}>
-                    <div style={{
-                      position: 'absolute',
-                      content: '',
-                      height: '19px',
-                      width: '19px',
-                      left: vacationMode ? '28px' : '3px',
-                      bottom: '3px',
-                      backgroundColor: 'white',
-                      borderRadius: '50%',
-                      transition: 'transform 0.3s'
-                    }}></div>
-                  </div>
-                </label>
-              </div>
-            </div>
-
-            <div style={{ marginBottom: '15px' }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <label style={{
-                  fontSize: '14px',
-                  textAlign: 'left'
-                }}>Auto-Approve Appointments</label>
-                
-                <label style={{
-                  position: 'relative',
-                  display: 'inline-block',
-                  width: '50px',
-                  height: '20px'
-                }}>
-                  <input
-                    type="checkbox"
-                    checked={autoApproveAppointments}
-                    onChange={(e) => setAutoApproveAppointments(e.target.checked)}
-                    style={{ opacity: 0, width: 0, height: 0 }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    cursor: 'pointer',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: autoApproveAppointments ? '#0E4456' : '#ccc',
-                    borderRadius: '25px',
-                    transition: 'background-color 0.3s'
-                  }}>
-                    <div style={{
-                      position: 'absolute',
-                      content: '',
-                      height: '19px',
-                      width: '19px',
-                      left: autoApproveAppointments ? '28px' : '3px',
-                      bottom: '3px',
-                      backgroundColor: 'white',
-                      borderRadius: '50%',
-                      transition: 'transform 0.3s'
-                    }}></div>
-                  </div>
-                </label>
-              </div>
             </div>
           </div>
         </div>
@@ -499,7 +240,6 @@ const DoctorSettingsScreen = () => {
                 }}>
                   <div style={{
                     position: 'absolute',
-                    content: '',
                     height: '19px',
                     width: '19px',
                     left: notificationEnabled ? '28px' : '3px',
@@ -519,7 +259,7 @@ const DoctorSettingsScreen = () => {
             borderRadius: '20px',
             padding: '25px',
             boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            height: '400px'
+            height: '250px'
           }}>
             <h2 style={{
               margin: '0 0 15px 0',
@@ -543,6 +283,159 @@ const DoctorSettingsScreen = () => {
             >
               Change Password
             </button>
+          </div>
+
+          {/* Availability & Schedule Container (separate, under Security & Privacy) */}
+          <div style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: '20px',
+            padding: '25px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+            height: '300px'
+          }}>
+            <h2 style={{
+              margin: '0 0 20px 0',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              textAlign: 'left'
+            }}>Availability & Schedule</h2>
+            
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                marginBottom: '10px',
+                textAlign: 'left'
+              }}>Set Available Hours</label>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '15px' }}>
+                <input
+                  type="time"
+                  value={availableHours}
+                  onChange={(e) => setAvailableHours(e.target.value)}
+                  style={{
+                    padding: '8px',
+                    border: '1px solid #ddd',
+                    borderRadius: '5px',
+                    fontSize: '14px'
+                  }}
+                />
+                <button
+                  onClick={handleSetAvailableHours}
+                  style={{
+                    backgroundColor: '#0E4456',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '15px',
+                    padding: '8px 15px',
+                    fontSize: '12px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Set
+                </button>
+              </div>
+            </div>
+
+            {/* Vacation Mode */}
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '15px'
+              }}>
+                <label style={{
+                  fontSize: '14px',
+                  textAlign: 'left'
+                }}>Vacation Mode</label>
+                
+                <label style={{
+                  position: 'relative',
+                  display: 'inline-block',
+                  width: '50px',
+                  height: '25px'
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={vacationMode}
+                    onChange={(e) => setVacationMode(e.target.checked)}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    cursor: 'pointer',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: vacationMode ? '#0E4456' : '#ccc',
+                    borderRadius: '25px',
+                    transition: 'background-color 0.3s'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      height: '19px',
+                      width: '19px',
+                      left: vacationMode ? '28px' : '3px',
+                      bottom: '3px',
+                      backgroundColor: 'white',
+                      borderRadius: '50%',
+                      transition: 'transform 0.3s'
+                    }}></div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            {/* Auto Approve */}
+            <div style={{ marginBottom: '15px' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <label style={{
+                  fontSize: '14px',
+                  textAlign: 'left'
+                }}>Auto-Approve Appointments</label>
+                
+                <label style={{
+                  position: 'relative',
+                  display: 'inline-block',
+                  width: '50px',
+                  height: '25px'
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={autoApproveAppointments}
+                    onChange={(e) => setAutoApproveAppointments(e.target.checked)}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    cursor: 'pointer',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: autoApproveAppointments ? '#0E4456' : '#ccc',
+                    borderRadius: '25px',
+                    transition: 'background-color 0.3s'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      height: '19px',
+                      width: '19px',
+                      left: autoApproveAppointments ? '28px' : '3px',
+                      bottom: '3px',
+                      backgroundColor: 'white',
+                      borderRadius: '50%',
+                      transition: 'transform 0.3s'
+                    }}></div>
+                  </div>
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
