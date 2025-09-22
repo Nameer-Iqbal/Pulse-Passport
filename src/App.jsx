@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { UserProvider } from "./components/UserContext";
+import { DoctorProvider } from "./components/DoctorContext";
 
 // 🌐 Public Website Layout & Pages
 import Layout from "./Components/Layout/Layout";
@@ -10,6 +12,7 @@ import SignupPage from "./Pages/SignUp";
 import LoginPage from "./Pages/Login";
 import DetailSignUp from "./Pages/DetailSignUp";
 import AIChatbotPopup from "./Components/AIChatbotPopup";
+
 
 // 🧑‍ Patient Dashboard Layout & Pages
 import DashboardLayout from "./Components/DashboardLayout/Layout";
@@ -33,48 +36,56 @@ import MedicalHome from "./Pages/DoctorDashboard/Home";
 import AppointmentsDashboard from "./Pages/DoctorDashboard/Appointments";
 import AIinsights from "./Pages/DoctorDashboard/AI-Insights";
 import DocHelpCenter from "./Pages/DoctorDashboard/HelpCenter";
+import DoctorSettingsScreen from "./Pages/DoctorDashboard/DoctorSettings";
+import PatientQueueDashboard from "./Pages/DoctorDashboard/PatientQueue";
 
 function App() {
   return (
-    <Routes>
-      {/* 🌐 Public Website Pages */}
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/detail-signup/:role" element={<DetailSignUp />} />
-      </Route>
+    <UserProvider>
+      <DoctorProvider>
+      <Routes>
+        {/* 🌐 Public Website Pages */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/detail-signup/:role" element={<DetailSignUp />} />
+        </Route>
 
-      {/* 🧑‍ Patient Dashboard */}
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<DashboardHome />} />
-        <Route path="home" element={<DashboardHome />} />
-        <Route path="history" element={<DashboardHistory />} />
-        <Route path="healthsummary" element={<HealthSummary />} />
-        <Route path="prescriptions" element={<Prescriptions />} />
-        <Route path="search-doctor" element={<SearchDoctor />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="settings" element={<Settings />} />
+        {/* 🧑‍ Patient Dashboard */}
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="home" element={<DashboardHome />} />
+          <Route path="history" element={<DashboardHistory />} />
+          <Route path="healthsummary" element={<HealthSummary />} />
+          <Route path="prescriptions" element={<Prescriptions />} />
+          <Route path="search-doctor" element={<SearchDoctor />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="settings" element={<Settings />} />
 
-        {/* Extra Sections */}
-        <Route path="upcoming-appointments" element={<UpcomingAppointments />} />
-        <Route path="book-appointments" element={<BookAppointments />} />
-        <Route path="reminders" element={<Reminders />} />
-        <Route path="help-center" element={<HelpCenter />} />
-      </Route>
+          {/* Extra Sections */}
+          <Route path="upcoming-appointments" element={<UpcomingAppointments />} />
+          <Route path="book-appointments" element={<BookAppointments />} />
+          <Route path="reminders" element={<Reminders />} />
+          <Route path="help-center" element={<HelpCenter />} />
+        </Route>
 
-      {/* 👨‍⚕️ Doctor Dashboard */}
-      <Route path="/docdashboard" element={<DocDashboardLayout />}>
-        <Route index element={<MedicalHome />} />
-        <Route path="home" element={<MedicalHome />} />
-        <Route path="appointments" element={<AppointmentsDashboard />} />
-        <Route path="aiinsights" element={<AIinsights />} />
-        <Route path="helpcenter" element={<DocHelpCenter />} />
-      </Route>
-    </Routes>
+        {/* 👨‍⚕️ Doctor Dashboard */}
+        <Route path="/docdashboard" element={<DocDashboardLayout />}>
+          <Route index element={<MedicalHome />} />
+          <Route path="home" element={<MedicalHome />} />
+          <Route path="appointments" element={<AppointmentsDashboard />} />
+          <Route path="aiinsights" element={<AIinsights />} />
+          <Route path="helpcenter" element={<DocHelpCenter />} />
+          <Route path="doctorsettings" element={<DoctorSettingsScreen />} />
+          <Route path="patientqueue" element={<PatientQueueDashboard />} />
+        </Route>
+      </Routes>
+      </DoctorProvider>
+    </UserProvider>
   );
 }
 

@@ -4,8 +4,11 @@ import { User, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../Components/UserContext"; 
+
 
 export default function LoginPage() {
+
   const {
     register,
     handleSubmit,
@@ -23,6 +26,16 @@ export default function LoginPage() {
       // Save token locally
       localStorage.setItem("token", res.data.token);
 
+      //  Set user globally
+      setUser({
+        name: res.data.name,
+        gender: res.data.gender, 
+        age: res.data.age,
+        bloodGroup: res.data.bloodGroup,
+        role: res.data.role
+      });
+
+
       // Role-based redirect
       if (res.data.role === "doctor") {
         navigate("/doctor-dashboard");
@@ -39,6 +52,9 @@ export default function LoginPage() {
     console.log("Forgot password clicked");
     // Handle forgot password logic here
   };
+
+  const { setUser } = useUser();
+
 
   return (
     <div className="min-h-screen relative overflow-hidden">

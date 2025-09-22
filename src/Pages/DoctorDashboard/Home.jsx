@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDoctor } from "../../components/DoctorContext";
+
 
 const MedicalHome = () => {
   const scheduledConsultations = [
@@ -22,11 +24,13 @@ const MedicalHome = () => {
     { label: 'Temp:', value: '98.6°F' }
   ];
 
+  const { doctor } = useDoctor();
+
   return (
     <div className="w-full min-h-screen bg-[#6F8F99]">
       {/* Header */}
       <div className="bg-[#6F8F99] text-white px-4 py-4">
-        <h1 className="text-xl font-medium">Welcome back, Dr. James Thornton</h1>
+        <h1 className="text-xl font-medium">Welcome back, {doctor.name}</h1>
         <hr className="border-white my-2" />
         <p className="text-white text-sm">You have 4 consultations scheduled today.</p>
       </div>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useUser } from "@/components/UserContext";
+
 import medicineBg from "../../assets/medicineBg.png";
 import {
   FaHome,
@@ -23,6 +25,8 @@ const LogoutPopup = ({ isOpen, onCancel, onConfirm }) => {
       onCancel();
     }
   };
+
+  
 
   return (
     <div 
@@ -83,6 +87,8 @@ const LogoutPopup = ({ isOpen, onCancel, onConfirm }) => {
 const Sidebar = () => {
   const navigate = useNavigate();
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const { user } = useUser();
+
 
   const linkClass =
     "flex items-center gap-3 px-3 py-1.5 rounded-lg text-sm hover:bg-gray-700";
@@ -124,21 +130,24 @@ const Sidebar = () => {
                 alt="Profile"
                 className="w-20 h-20 rounded-full border-2 border-white object-cover"
               />
-              <div className="text-sm font-semibold mt-0">Sarah Ahmed</div>
+              <div className="text-sm font-semibold mt-0">
+                {user?.name || "Guest"}
+              </div>
             </div>
+            
 
             <div className="flex flex-col gap-1 mt-1">
               <span className="bg-white text-gray-800 px-2 py-0.5 text-xs rounded-full">
                 CODE: 0105
               </span>
               <span className="bg-white text-gray-800 px-2 py-0.5 text-xs rounded-full">
-                Female
+                {user?.gender || ""}
               </span>
               <span className="bg-white text-gray-800 px-2 py-0.5 text-xs rounded-full">
-                20 yrs
+                {user?.age ? `${user.age} yrs` : ""}
               </span>
               <span className="bg-white text-gray-800 px-2 py-0.5 text-xs rounded-full">
-                A +ve
+                {user?.bloodGroup || ""}
               </span>
             </div>
           </div>

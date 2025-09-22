@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MessageCircle, Mic, Camera } from 'lucide-react';
 import AIChatbotPopup from "../../Components/AIChatbotPopup"; // 
+import { useUser } from "../../Components/UserContext"; //
+import { useNavigate } from "react-router-dom";
 
 // Search Bar Component with Dropdown
 const SearchBar = () => {
@@ -55,9 +57,10 @@ const SearchBar = () => {
 
 // Greeting Component
 const Greeting = () => {
+  const { user } = useUser();
   return (
     <div className="px-4 pb-2">
-      <h1 className="text-white text-lg font-medium">Hi, there Anna!</h1>
+      <h1 className="text-white text-lg font-medium">Hi, there {user?.name}!</h1>
     </div>
   );
 };
@@ -148,11 +151,12 @@ const ReminderSection = () => {
 
 // Navigation Buttons
 const NavigationButtons = () => {
+  const navigate = useNavigate();
   const buttons = [
     { name: "Medicines", active: true },
-    { name: "Appointments", active: false },
+    { name: "Appointments", active: false, path: "/dashboard/upcoming-appointments"  },
     { name: "Labs", active: false },
-    { name: "Book an Appointment", active: false }
+    { name: "Book an Appointment", active: false, path: "/dashboard/book-appointments" }
   ];
 
   return (
@@ -162,6 +166,7 @@ const NavigationButtons = () => {
           {buttons.map((button, index) => (
             <button
               key={index}
+              onClick={() => button.path && navigate(button.path)}
               className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                 button.active
                   ? 'bg-[#988F8F] text-white'

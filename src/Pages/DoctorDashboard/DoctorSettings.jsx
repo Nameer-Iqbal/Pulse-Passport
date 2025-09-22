@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
-import { useUser } from "../../Components/UserContext"; // <-- context import
+import { useDoctor } from "../../components/DoctorContext";
 
-const SettingsScreen = () => {
-  const { user, setUser } = useUser(); // context se user laa liya
-  const [profilePicture, setProfilePicture] = useState(null);
+const DoctorSettingsScreen = () => {
+  const { doctor, setDoctor } = useDoctor();
+  
   const [availableHours, setAvailableHours] = useState('');
+  const [vacationMode, setVacationMode] = useState(false);
+  const [autoApproveAppointments, setAutoApproveAppointments] = useState(true);
   const [notificationEnabled, setNotificationEnabled] = useState(true);
-  const [paymentDropdownOpen, setPaymentDropdownOpen] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Payment Methods');
-
-  // Profile data ko local editable state me rakho
-  const [profileData, setProfileData] = useState({
-    name: user?.name || '',
-    gender: user?.gender || 'Other',
-    age: user?.age || '',
-    bloodGroup: user?.bloodGroup || ''
-  });
 
   const handleProfileChange = (field, value) => {
-    setProfileData(prev => ({
+    setDoctor(prev => ({
       ...prev,
       [field]: value
     }));
@@ -29,15 +21,17 @@ const SettingsScreen = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setProfilePicture(e.target.result);
+        setDoctor(prev => ({
+          ...prev,
+          profilePicture: e.target.result
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleConfirmChanges = () => {
-    setUser(profileData); // Context + localStorage update
-    console.log('Profile changes confirmed:', profileData);
+    console.log('Profile changes confirmed:', doctor);
     alert('Changes saved successfully!');
   };
 
@@ -51,18 +45,14 @@ const SettingsScreen = () => {
     alert('Change password functionality would open here');
   };
 
-  const handlePaymentMethodSelect = (method) => {
-    setSelectedPaymentMethod(method);
-    setPaymentDropdownOpen(false);
-    console.log('Payment method selected:', method);
-  };
-
   return (
     <div style={{
       backgroundColor: '#EAEAEA',
-      minHeight: '100vh',
+      minHeight: '150vh',
+      maxHeight: '100vh',
       padding: '30px',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: 'Arial, sans-serif',
+      overflowY: 'auto'
     }}>
       <div style={{
         display: 'grid',
@@ -81,7 +71,7 @@ const SettingsScreen = () => {
             borderRadius: '20px',
             padding: '25px',
             boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            height: 'fit-content'
+            height: '700px'
           }}>
             <div style={{
               display: 'flex',
@@ -107,9 +97,9 @@ const SettingsScreen = () => {
               {/* Profile Picture */}
               <div style={{ position: 'relative' }}>
                 <div style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '50%',
+                  width: '90px',
+                  height: '90px',
+                  borderRadius: '80%',
                   backgroundColor: '#988F8F',
                   display: 'flex',
                   alignItems: 'center',
@@ -117,27 +107,24 @@ const SettingsScreen = () => {
                   overflow: 'hidden',
                   cursor: 'pointer'
                 }} onClick={() => document.getElementById('profilePictureInput').click()}>
-                  {profilePicture ? (
+                  {doctor.profilePicture ? (
                     <img 
-                      src={profilePicture} 
+                      src={doctor.profilePicture} 
                       alt="Profile" 
                       style={{
                         width: '100%',
-                        height: '100%',
+                        height: '150%',
                         objectFit: 'cover'
                       }}
                     />
                   ) : (
                     <svg 
-                      width="100" 
-                      height="100" 
-                      viewBox="0 0 24 25" 
+                      width="50" 
+                      height="50" 
+                      viewBox="0 0 24 24" 
                       fill="white"
                     >
-                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
-                      1.79-4 4 1.79 4 4 4zm0 
-                      2c-2.67 0-8 1.34-8 
-                      4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                   )}
                 </div>
@@ -153,7 +140,6 @@ const SettingsScreen = () => {
 
             {/* Profile Information */}
             <div style={{ marginBottom: '25px' }}>
-              {/* Name */}
               <div style={{ marginBottom: '15px' }}>
                 <label style={{
                   display: 'block',
@@ -164,7 +150,7 @@ const SettingsScreen = () => {
                 }}>NAME :</label>
                 <input
                   type="text"
-                  value={profileData.name}
+                  value={doctor.name}
                   onChange={(e) => handleProfileChange('name', e.target.value)}
                   style={{
                     width: '100%',
@@ -176,7 +162,6 @@ const SettingsScreen = () => {
                 />
               </div>
 
-              {/* Gender */}
               <div style={{ marginBottom: '15px' }}>
                 <label style={{
                   display: 'block',
@@ -184,37 +169,11 @@ const SettingsScreen = () => {
                   fontWeight: 'bold',
                   marginBottom: '5px',
                   textAlign: 'left'
-                }}>GENDER :</label>
-                <select
-                  value={profileData.gender}
-                  onChange={(e) => handleProfileChange('gender', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ddd',
-                    borderRadius: '5px',
-                    fontSize: '14px'
-                  }}
-                >
-                  <option value="Female">Female</option>
-                  <option value="Male">Male</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              {/* Age */}
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '5px',
-                  textAlign: 'left'
-                }}>AGE :</label>
+                }}>SPECIALIZATION :</label>
                 <input
                   type="text"
-                  value={profileData.age}
-                  onChange={(e) => handleProfileChange('age', e.target.value)}
+                  value={doctor.specialization}
+                  onChange={(e) => handleProfileChange('specialization', e.target.value)}
                   style={{
                     width: '100%',
                     padding: '8px',
@@ -225,7 +184,6 @@ const SettingsScreen = () => {
                 />
               </div>
 
-              {/* Blood Group */}
               <div style={{ marginBottom: '15px' }}>
                 <label style={{
                   display: 'block',
@@ -233,11 +191,77 @@ const SettingsScreen = () => {
                   fontWeight: 'bold',
                   marginBottom: '5px',
                   textAlign: 'left'
-                }}>BLOOD GROUP :</label>
+                }}>HOSPITAL :</label>
                 <input
                   type="text"
-                  value={profileData.bloodGroup}
-                  onChange={(e) => handleProfileChange('bloodGroup', e.target.value)}
+                  value={doctor.hospital}
+                  onChange={(e) => handleProfileChange('hospital', e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    border: '1px solid #ddd',
+                    borderRadius: '5px',
+                    fontSize: '14px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  marginBottom: '5px',
+                  textAlign: 'left'
+                }}>EXPERIENCE :</label>
+                <input
+                  type="text"
+                  value={doctor.experience}
+                  onChange={(e) => handleProfileChange('experience', e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    border: '1px solid #ddd',
+                    borderRadius: '5px',
+                    fontSize: '14px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  marginBottom: '5px',
+                  textAlign: 'left'
+                }}>QUALIFICATION :</label>
+                <input
+                  type="text"
+                  value={doctor.qualification}
+                  onChange={(e) => handleProfileChange('qualification', e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    border: '1px solid #ddd',
+                    borderRadius: '5px',
+                    fontSize: '14px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  marginBottom: '5px',
+                  textAlign: 'left'
+                }}>CERTIFICATE :</label>
+                <input
+                  type="text"
+                  value={doctor.certificate}
+                  onChange={(e) => handleProfileChange('certificate', e.target.value)}
                   style={{
                     width: '100%',
                     padding: '8px',
@@ -269,13 +293,13 @@ const SettingsScreen = () => {
             </div>
           </div>
 
-          {/* Availability & Schedule */}
+          {/* Availability & Schedule Container */}
           <div style={{
             backgroundColor: '#FFFFFF',
             borderRadius: '20px',
             padding: '25px',
             boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            height: 'fit-content'
+            height: '300px'
           }}>
             <h2 style={{
               margin: '0 0 20px 0',
@@ -284,14 +308,14 @@ const SettingsScreen = () => {
               textAlign: 'left'
             }}>Availability & Schedule</h2>
             
-            <div style={{ marginBottom: '15px' }}>
+            <div style={{ marginBottom: '20px' }}>
               <label style={{
                 display: 'block',
                 fontSize: '14px',
                 marginBottom: '10px',
                 textAlign: 'left'
               }}>Set Available Hours</label>
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '15px' }}>
                 <input
                   type="time"
                   value={availableHours}
@@ -317,6 +341,107 @@ const SettingsScreen = () => {
                 >
                   Set
                 </button>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '15px'
+              }}>
+                <label style={{
+                  fontSize: '14px',
+                  textAlign: 'left'
+                }}>Vacation Mode</label>
+                
+                <label style={{
+                  position: 'relative',
+                  display: 'inline-block',
+                  width: '50px',
+                  height: '25px'
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={vacationMode}
+                    onChange={(e) => setVacationMode(e.target.checked)}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    cursor: 'pointer',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: vacationMode ? '#0E4456' : '#ccc',
+                    borderRadius: '25px',
+                    transition: 'background-color 0.3s'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      content: '',
+                      height: '19px',
+                      width: '19px',
+                      left: vacationMode ? '28px' : '3px',
+                      bottom: '3px',
+                      backgroundColor: 'white',
+                      borderRadius: '50%',
+                      transition: 'transform 0.3s'
+                    }}></div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '15px' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <label style={{
+                  fontSize: '14px',
+                  textAlign: 'left'
+                }}>Auto-Approve Appointments</label>
+                
+                <label style={{
+                  position: 'relative',
+                  display: 'inline-block',
+                  width: '50px',
+                  height: '20px'
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={autoApproveAppointments}
+                    onChange={(e) => setAutoApproveAppointments(e.target.checked)}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    cursor: 'pointer',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: autoApproveAppointments ? '#0E4456' : '#ccc',
+                    borderRadius: '25px',
+                    transition: 'background-color 0.3s'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      content: '',
+                      height: '19px',
+                      width: '19px',
+                      left: autoApproveAppointments ? '28px' : '3px',
+                      bottom: '3px',
+                      backgroundColor: 'white',
+                      borderRadius: '50%',
+                      transition: 'transform 0.3s'
+                    }}></div>
+                  </div>
+                </label>
               </div>
             </div>
           </div>
@@ -390,7 +515,7 @@ const SettingsScreen = () => {
             borderRadius: '20px',
             padding: '25px',
             boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            height: '300px'
+            height: '400px'
           }}>
             <h2 style={{
               margin: '0 0 15px 0',
@@ -415,102 +540,10 @@ const SettingsScreen = () => {
               Change Password
             </button>
           </div>
-
-          {/* Payment Methods Container */}
-          <div style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '20px',
-            padding: '25px',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            height: '300px',
-            position: 'relative'
-          }}>
-            <div style={{ position: 'relative' }}>
-              <button
-                onClick={() => setPaymentDropdownOpen(!paymentDropdownOpen)}
-                style={{
-                  width: '70%',
-                  backgroundColor: '#0E4456',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '25px',
-                  padding: '15px 20px',
-                  fontSize: '14px',
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                {selectedPaymentMethod}
-                <span style={{
-                  marginLeft: '20px',
-                  transform: paymentDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s'
-                }}>▼</span>
-              </button>
-              
-              {paymentDropdownOpen && (
-                <div style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: '22px',
-                  right: '190px',
-                  backgroundColor: '#567C89',
-                  borderRadius: '0 0 25px 25px',
-                  overflow: 'hidden',
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-                  zIndex: 10
-                }}>
-                  <button
-                    onClick={() => handlePaymentMethodSelect('Digital Wallets')}
-                    style={{
-                      width: '100%',
-                      backgroundColor: 'transparent',
-                      color: 'white',
-                      border: 'none',
-                      padding: '15px 20px',
-                      fontSize: '14px',
-                      cursor: 'pointer',
-                      textAlign: 'left',
-                      borderBottom: '1px solid rgba(255,255,255,0.2)'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255,255,255,0.1)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Digital Wallets
-                  </button>
-                  
-                  <button
-                    onClick={() => handlePaymentMethodSelect('Bank Transfer')}
-                    style={{
-                      width: '100%',
-                      backgroundColor: 'transparent',
-                      color: 'white',
-                      border: 'none',
-                      padding: '15px 20px',
-                      fontSize: '14px',
-                      cursor: 'pointer',
-                      textAlign: 'left'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255,255,255,0.1)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Bank Transfer
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
         </div>
-
-        {/* Right Column - Empty space for now to maintain layout */}
-        <div></div>
       </div>
     </div>
   );
 };
 
-export default SettingsScreen;
+export default DoctorSettingsScreen;

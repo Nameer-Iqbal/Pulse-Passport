@@ -4,6 +4,8 @@ import { Upload, Copy, User, Mail, Phone, CreditCard, MapPin, Droplet, AlertTria
 import { useLocation, useParams } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "@/components/UserContext"; 
+import { useDoctor } from "@/components/DoctorContext";
 
 
 const SignupForm = () => {
@@ -16,7 +18,10 @@ const SignupForm = () => {
   const { role: roleFromParams } = useParams();
   const location = useLocation();
   const signupData = location.state || {}; 
-  
+  const { setUser } = useUser();
+  const { setDoctor } = useDoctor();
+
+
   const navigate = useNavigate();
 
 
@@ -60,6 +65,24 @@ const SignupForm = () => {
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
       }
+
+      setUser({
+        name: `${res.data.firstName} ${res.data.lastName}`,
+        gender: res.data.gender,
+        age: res.data.age || "",
+        bloodGroup: res.data.bloodGroup || "", 
+        role: role
+      });
+
+      setDoctor({
+        name: `${res.data.firstName} ${res.data.lastName}`,
+        gender: res.data.gender,
+        age: res.data.age || "",
+        specialization: res.data.specialization,
+        experience: res.data.yearsOfExperience,
+        city: res.data.city,
+        role: role
+      });
 
       // Redirect based on role
       if (role === 'doctor') {
